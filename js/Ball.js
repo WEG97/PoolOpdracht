@@ -1,5 +1,5 @@
 class Ball{
-    constructor(posX, posY, posZ, number, color){
+    constructor(posX, posY, posZ, number){
         this.posX = posX;
         this.posY = posY;
         this.posZ = posZ;
@@ -7,12 +7,8 @@ class Ball{
         this.speedY = 0;
         this.speedZ = 0;
         this.ballNumber = number;
-        this.color = color;
-        this.geometry = new THREE.SphereGeometry( 5, 32, 32 );
-        this.material = new THREE.MeshPhongMaterial({color: this.color});
-        this.sphere = new THREE.Mesh(this.geometry, this.material);
-        scene.add(this.sphere);
         this.iPooled = false;
+        this.geometry = new THREE.SphereGeometry( 5, 32, 32 );
     }
 
     get position(){
