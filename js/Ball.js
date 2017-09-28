@@ -1,7 +1,7 @@
 class Ball{
-    constructor(posX, posY, posZ, number){
+    constructor(posX, posZ, number){
         this.posX = posX;
-        this.posY = posY;
+        this.posY = 5-0.5;
         this.posZ = posZ;
         this.speedX = 0;
         this.speedY = 0;

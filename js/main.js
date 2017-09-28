@@ -35,6 +35,23 @@ function onLoad() {
 
     var table = new Table();
 
+    var whiteball = new WhiteBall(-60,0);
+    var ball01 = new ColoredBall(-30,0,1);
+    var ball02 = new ColoredBall(-20,0,2);
+    var ball03 = new ColoredBall(-10,0,3);
+    var ball04 = new ColoredBall(0,0,4);
+    var ball05 = new ColoredBall(10,0,5);
+    var ball06 = new ColoredBall(20,0,6);
+    var ball07 = new ColoredBall(30,0,7);
+    var ball08 = new ColoredBall(40,0,8);
+    var ball09 = new ColoredBall(50,0,9);
+    var ball10 = new ColoredBall(60,0,10);
+    var ball11 = new ColoredBall(70,0,11);
+    var ball12 = new ColoredBall(80,0,12);
+    var ball13 = new ColoredBall(90,0,13);
+    var ball14 = new ColoredBall(100,0,14);
+    var ball15 = new ColoredBall(110,0,15);
+
     camera.lookAt(new THREE.Vector3(0,0,0));
     draw();
 };
