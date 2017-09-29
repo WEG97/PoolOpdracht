@@ -2,7 +2,7 @@ var Table = function () {
     var mesh_x = -Table.LEN_X / 2;
     var mesh_y = 0;
     var mesh_z = Table.LEN_Z / 2;
-  
+
     var loader = new THREE.JSONLoader();
     loader.load('models/base.json', function (geometry) { //basis van de biljart tafel (kan nog wat worden aangepast)
       var mesh = new THREE.Mesh(geometry, new THREE.MeshPhongMaterial({
@@ -91,7 +91,7 @@ var Table = function () {
   };
   
   var TABLE_COLORS = {
-    cloth: 0x4d9900
+    cloth: 0x206020
   };
   
   Table.LEN_Z = 137.16;

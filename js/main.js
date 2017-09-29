@@ -52,6 +52,22 @@ function onLoad() {
     var ball14 = new ColoredBall(100,0,14);
     var ball15 = new ColoredBall(110,0,15);
 
+    //?????????werkt niet moet eigenlijk in de draw functie maar kent ball01 dan niet
+    //var collisionBorder = new THREE.Raycaster();
+    //var speed = new THREE.Vector3();
+
+    //ball01.position.add(speed.copy(ball01.direction).multiplyScalar(20));
+    //collisionBorder.set(ball01.position, ball01.direction);
+    //var intersections = collisionBorder.intersectObjects(table.tableGroup.children);
+
+    //if(intersections.length > 0){
+    //    var intersection = intersections[0];
+
+    //    if(intersection.distance < 2){
+    //        ball01.direction.reflect(intersection.face.normal);
+     //   }
+    //}
+
     camera.lookAt(new THREE.Vector3(0,0,0));
     draw();
 };
@@ -59,6 +75,7 @@ function onLoad() {
 function draw() {
     controls.update();
     requestAnimationFrame(draw);
+    window.addEventListener( 'resize', onWindowResize, false );
     renderer.render(scene, camera);
 };
 
@@ -68,4 +85,13 @@ function addLights() {
     scene.add(light);
     var tableLight1 = new TableLight(278 / 4, 150, 0);
     var tableLight2 = new TableLight(-278 / 4, 150, 0);
+};
+
+//resizes window after window size changed
+function onWindowResize() {
+
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+
+    renderer.setSize(window.innerWidth, window.innerHeight);
 };
