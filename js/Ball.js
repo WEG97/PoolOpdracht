@@ -1,18 +1,21 @@
 class Ball{
     constructor(posX, posZ, number){
-        this.posX = posX;
-        this.posY = 5-0.5;
-        this.posZ = posZ;
         this.ballNumber = number;
         this.iPooled = false;
-        this.geometry = new THREE.SphereGeometry( 5, 32, 32 );
+        this.geometry = new THREE.SphereGeometry( 4, 32, 32 );
+        this.texture = 'images/balls/' + this.ballNumber + '.png';
+        this.material = new THREE.MeshPhongMaterial({
+            map: THREE.ImageUtils.loadTexture(this.texture),
+            specular: 0x7c7c7c,
+            ambient: 0x030303,
+            shininess: 20
+        });
+        this.sphere = new THREE.Mesh(this.geometry, this.material);
+        this.sphere.position.set(posX, 4-0.3, posZ);
+        scene.add(this.sphere);
         this.direction = new THREE.Vector3();
         this.direction.set(0,0,0);
         this.direction.normalize();
-    }
-
-    get position(){
-        return [this.posX, this.posY, this.posZ];
     }
 
     isMoving(){
