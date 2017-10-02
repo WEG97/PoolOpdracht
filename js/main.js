@@ -52,8 +52,8 @@ function onLoad() {
     this.ball14 = new ColoredBall(110,16,14);
     this.ball15 = new ColoredBall(110,0,15);
 
-    //this.collisionBorder = new THREE.Raycaster();
-    //this.speed = new THREE.Vector3();
+    this.collisionBorder = new THREE.Raycaster();
+    this.speed = new THREE.Vector3();
 
     camera.lookAt(new THREE.Vector3(0,0,0));
     draw();
@@ -63,8 +63,10 @@ function draw() {
     controls.update();
     requestAnimationFrame(draw);
 
-    //this.ball01.position.add(this.speed.copy(this.ball01.direction).multiplyScalar(20));
-    //this.collisionBorder.set(this.ball01.position, this.ball01.direction);
+    this.ball01.sphere.position.x -= 1;
+
+    //this.ball01.sphere.position.add(this.speed.copy(this.ball01.direction).multiplyScalar(20));
+    //this.collisionBorder.set(this.ball01.sphere.position, this.ball01.direction);
     //var intersections = this.collisionBorder.intersectObjects(this.whiteball);
 
     //if(intersections.length > 0){
