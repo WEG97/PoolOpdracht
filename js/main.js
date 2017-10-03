@@ -63,19 +63,19 @@ function draw() {
     controls.update();
     requestAnimationFrame(draw);
 
-    this.ball01.sphere.position.x -= 1;
+    //this.ball01.sphere.position.x -= 1;
+    this.ball01.direction.x = -1;
+    this.ball01.sphere.position.add(this.speed.copy(this.ball01.direction).multiplyScalar(0.5));
+    this.collisionBorder.set(this.ball01.sphere.position, this.ball01.direction);
+    var intersections = this.collisionBorder.intersectObjects(this.whiteball);
 
-    //this.ball01.sphere.position.add(this.speed.copy(this.ball01.direction).multiplyScalar(20));
-    //this.collisionBorder.set(this.ball01.sphere.position, this.ball01.direction);
-    //var intersections = this.collisionBorder.intersectObjects(this.whiteball);
+    if(intersections.length > 0){
+        var intersection = intersections[0];
 
-    //if(intersections.length > 0){
-    //    var intersection = intersections[0];
-
-    //    if(intersection.distance < 2){
-    //        this.ball01.direction.reflect(intersection.face.normal);
-    //   }
-    //}
+        if(intersection.distance < 8*8){
+            this.ball01.direction.reflect(intersection.face.normal);
+       }
+    }
 
     window.addEventListener( 'resize', onWindowResize, false );
     renderer.render(scene, camera);
