@@ -55,6 +55,11 @@ function onLoad() {
     this.collisionBorder = new THREE.Raycaster();
     this.speed = new THREE.Vector3();
 
+    this.rotationVector = new THREE.Vector3(0,0,0.1);
+
+    this.ball01.direction.x = -1;
+    this.whiteball.direction.x = 1;
+
     camera.lookAt(new THREE.Vector3(0,0,0));
     draw();
 };
@@ -64,8 +69,9 @@ function draw() {
     requestAnimationFrame(draw);
 
     //this.ball01.sphere.position.x -= 1;
-    this.ball01.direction.x = -1;
     this.ball01.sphere.position.add(this.speed.copy(this.ball01.direction).multiplyScalar(0.5));
+    this.whiteball.sphere.position.add(this.speed.copy(this.whiteball.direction).multiplyScalar(0.5));
+    this.ball01.sphere.rotation.setFromVector3(this.ball01.sphere.rotation.toVector3().add(this.rotationVector));
     /**this.collisionBorder.set(this.ball01.sphere.position, this.ball01.direction);
     var intersections = this.collisionBorder.intersectObjects(this.whiteball);
 
@@ -77,9 +83,10 @@ function draw() {
        }
     }**/
 
-    if(this.ball01.colliding(this.whiteball)){
-        this.ball01.direction.x = 1;
-        this.ball01.sphere.position.add(this.speed.copy(this.ball01.direction).multiplyScalar(0.5));
+    if(this.ball01.isColliding(this.whiteball)){
+        //this.ball01.direction.x = 1;
+        //this.ball01.sphere.position.add(this.speed.copy(this.ball01.direction).multiplyScalar(0.5));
+        this.ball01.collision(this.whiteball);
     }
 
     window.addEventListener( 'resize', onWindowResize, false );

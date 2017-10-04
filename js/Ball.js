@@ -1,4 +1,5 @@
 var radius = 4;
+var mass = 1;
 
 class Ball{
     constructor(posX, posZ, number){
@@ -20,7 +21,7 @@ class Ball{
         this.direction.normalize();
     }
 
-    colliding(ball) {
+    isColliding(ball) {
         var xd = this.sphere.position.x - ball.sphere.position.x;
         var yd = this.sphere.position.y - ball.sphere.position.y;
 
@@ -36,53 +37,32 @@ class Ball{
     }
 
     collision(ball) {
-        // get the mtd
-        /**var delta = (this.sphere.position - ball.sphere.position);
-        var r = radius + radius;
-        var dist2 = delta.dot(delta);
+        //normalized vector n from center to center of the two balls
+        var n = new THREE.Vector3();
+        n.subVectors(this.sphere.position, ball.sphere.position);
+        n.normalize();
 
-        if (dist2 > r*r) return; // they aren't colliding
+        //length of the component of each of the movement vectors along n
+        var a1 = this.direction.dot(n);
+        var a2 = ball.direction.dot(n);
 
+        var p = (2 * (a1 - a2)) / (mass + mass);
 
-        var d = delta.getLength();
+        var x = new THREE.Vector3(n.multiplyScalar(p * mass));
 
-        var mtd;
-        if (d != 0.0)
-        {
-            mtd = delta.multiply(((radius + radius)-d)/d); // minimum translation distance to push balls apart after intersecting
+        //calculate new movement vector of first ball
+        var v1 = new THREE.Vector3();
+        v1.subVectors(this.direction, x);
+        //calculate new movement vector of second ball
+        var v2 = new THREE.Vector3();
+        v2.addVectors(ball.direction, x);
 
-        }
-        else // Special case. Balls are exactly on top of eachother.  Don't want to divide by zero.
-        {
-            d = radius + radius - 1.0;
-            delta = new Vector2d(radius + radius, 0.0);
+        //debug --> x geen goede waarde
+        window.alert(v1.x+" "+v1.y+" "+v1.z);
+        window.alert(v2.x+" "+v2.y+" "+v2.z);
 
-            mtd = delta.multiply(((getRadius() + ball.getRadius())-d)/d);
-        }
-
-        // resolve intersection
-        var im1 = 1 / getMass(); // inverse mass quantities
-        var im2 = 1 / ball.getMass();
-
-        // push-pull them apart
-        this.sphere.position = position.add(mtd.multiply(im1 / (im1 + im2)));
-        ball.sphere.position = ball.position.subtract(mtd.multiply(im2 / (im1 + im2)));
-
-        // impact speed
-        var v = (this.velocity.subtract(ball.velocity));
-        var vn = v.dot(mtd.normalize());
-
-        // sphere intersecting but moving away from each other already
-        if (vn > 0.0) return;
-
-        // collision impulse
-        var i = (-(1.0 + Constants.restitution) * vn) / (im1 + im2);
-        var impulse = mtd.multiply(i);
-
-        // change in momentum
-        this.velocity = this.velocity.add(impulse.multiply(im1));
-        ball.velocity = ball.velocity.subtract(impulse.multiply(im2));**/
-
+        this.direction.set(v1);
+        ball.direction.set(v2);
     }
 
     isMoving(){
