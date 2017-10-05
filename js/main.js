@@ -2,6 +2,7 @@ var scene, renderer, camera, controls;
 var height = window.innerHeight;
 var width = window.innerWidth;
 var debug = false;
+var balls = [];
 
 function onLoad() {
 
@@ -35,30 +36,31 @@ function onLoad() {
 
     var table = new Table();
 
-    this.whiteball = new WhiteBall(-80,0);
-    this.ball01 = new ColoredBall(83,0,1);
-    this.ball02 = new ColoredBall(90,4,2);
-    this.ball03 = new ColoredBall(103,-12,3);
-    this.ball04 = new ColoredBall(103,4,4);
-    this.ball05 = new ColoredBall(110,-8,5);
-    this.ball06 = new ColoredBall(103,12,6);
-    this.ball07 = new ColoredBall(110,8,7);
-    this.ball08 = new ColoredBall(96,0,8);
-    this.ball09 = new ColoredBall(90,-4,9);
-    this.ball10 = new ColoredBall(96,8,10);
-    this.ball11 = new ColoredBall(96,-8,11);
-    this.ball12 = new ColoredBall(103,-4,12);
-    this.ball13 = new ColoredBall(110,-16,13);
-    this.ball14 = new ColoredBall(110,16,14);
-    this.ball15 = new ColoredBall(110,0,15);
+    balls = [
+    new WhiteBall(-80,0),
+    new ColoredBall(83,0,1),
+    new ColoredBall(90,4,2),
+    new ColoredBall(103,-12,3),
+    new ColoredBall(103,4,4),
+    new ColoredBall(110,-8,5),
+    new ColoredBall(103,12,6),
+    new ColoredBall(110,8,7),
+    new ColoredBall(96,0,8),
+    new ColoredBall(90,-4,9),
+    new ColoredBall(96,8,10),
+    new ColoredBall(96,-8,11),
+    new ColoredBall(103,-4,12),
+    new ColoredBall(110,-16,13),
+    new ColoredBall(110,16,14),
+    new ColoredBall(110,0,15)]
 
     this.collisionBorder = new THREE.Raycaster();
     this.speed = new THREE.Vector3();
 
     this.rotationVector = new THREE.Vector3(0,0,0.1);
 
-    this.ball01.direction.x = -1;
-    this.whiteball.direction.x = 1;
+    balls[1].direction.x = -1;
+    balls[0].direction.x = 1;
 
     camera.lookAt(new THREE.Vector3(0,0,0));
     draw();
@@ -68,25 +70,16 @@ function draw() {
     controls.update();
     requestAnimationFrame(draw);
 
-    //this.ball01.sphere.position.x -= 1;
-    this.ball01.sphere.position.add(this.speed.copy(this.ball01.direction).multiplyScalar(0.5));
-    this.whiteball.sphere.position.add(this.speed.copy(this.whiteball.direction).multiplyScalar(0.5));
-    this.ball01.sphere.rotation.setFromVector3(this.ball01.sphere.rotation.toVector3().add(this.rotationVector));
-    /**this.collisionBorder.set(this.ball01.sphere.position, this.ball01.direction);
-    var intersections = this.collisionBorder.intersectObjects(this.whiteball);
+    balls[1].sphere.position.add(this.speed.copy(balls[1].direction).multiplyScalar(0.5));
+    balls[0].sphere.position.add(this.speed.copy(balls[0].direction).multiplyScalar(0.5));
+    balls[1].sphere.rotation.setFromVector3(balls[0].sphere.rotation.toVector3().add(this.rotationVector));
 
-    if(intersections.length > 0){
-        var intersection = intersections[0];
-
-        if(intersection.distance < 8*8){
-            this.ball01.direction.reflect(intersection.face.normal);
-       }
-    }**/
-
-    if(this.ball01.isColliding(this.whiteball)){
-        //this.ball01.direction.x = 1;
-        //this.ball01.sphere.position.add(this.speed.copy(this.ball01.direction).multiplyScalar(0.5));
-        this.ball01.collision(this.whiteball);
+    for(var i = 0; i < balls.length; i++){
+        for(var j = 0; j < balls.length; j++){
+            if(balls[i].isColliding(balls[j])){
+                balls[i].collision(balls[j]);
+            }
+        }
     }
 
     window.addEventListener( 'resize', onWindowResize, false );

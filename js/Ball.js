@@ -48,21 +48,10 @@ class Ball{
 
         var p = (2 * (a1 - a2)) / (mass + mass);
 
-        var x = new THREE.Vector3(n.multiplyScalar(p * mass));
+        n.multiplyScalar(p * mass)
 
-        //calculate new movement vector of first ball
-        var v1 = new THREE.Vector3();
-        v1.subVectors(this.direction, x);
-        //calculate new movement vector of second ball
-        var v2 = new THREE.Vector3();
-        v2.addVectors(ball.direction, x);
-
-        //debug --> x geen goede waarde
-        window.alert(v1.x+" "+v1.y+" "+v1.z);
-        window.alert(v2.x+" "+v2.y+" "+v2.z);
-
-        this.direction.set(v1);
-        ball.direction.set(v2);
+        this.direction.sub(n);
+        ball.direction.add(n);
     }
 
     isMoving(){
