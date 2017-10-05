@@ -1,4 +1,4 @@
-var radius = 4;
+var radius = 3.5;
 var mass = 1;
 
 class Ball{
@@ -14,25 +14,55 @@ class Ball{
             shininess: 20
         });
         this.sphere = new THREE.Mesh(this.geometry, this.material);
-        this.sphere.position.set(posX, 4-0.3, posZ);
+        this.sphere.position.set(posX, radius-0.3, posZ);
         scene.add(this.sphere);
         this.direction = new THREE.Vector3();
         this.direction.set(0,0,0);
         this.direction.normalize();
+        this.speed = new THREE.Vector3();
+        //this.rotation = new THREE.Vector3();
+        this.clock = new THREE.Clock();
     }
 
     isColliding(ball) {
         var xd = this.sphere.position.x - ball.sphere.position.x;
         var yd = this.sphere.position.y - ball.sphere.position.y;
 
-        var sqrRadius = (radius*2) * (radius*2);
+        var sumRadius = (radius + radius);
+        var sqrSumRadius = sumRadius * sumRadius;
         var distSqr = (xd * xd) + (yd * yd);
 
-        if (distSqr <= sqrRadius){
+        //balls are not gone hit each other
+        var dist = this.sphere.position.distanceTo(ball.sphere.position) - sumRadius;
+        if(this.direction.length() < dist){
+            return false;
+        }
+
+        var N = new THREE.Vector3();
+        N.copy(this.direction);
+        N.normalize();
+
+        var C = new THREE.Vector3();
+        C.copy(ball.sphere.position);
+        C.sub(this.sphere.position);
+        var D = N.dot(C);
+
+        //balls aren't moving towards each other
+        if(D <= 0){return false;}
+
+        //if the closest that this.ball will get to ball is more than the sum of their radii they aren't going to collide
+        var lengthC = C.length();
+        var F = (lengthC*lengthC)-(D*D);
+        if(F >= sqrSumRadius){
+            return false;
+        }
+
+        //if the distance between the balls is les or equal to the sum of the radius they hit
+        if (distSqr <= sqrSumRadius){
             return true;
         }
 
-        return false;
+        return true;
 
     }
 
@@ -51,13 +81,20 @@ class Ball{
         n.multiplyScalar(p * mass)
 
         this.direction.sub(n);
+        //this.sphere.rotation.setFromVector3(this.direction);
         ball.direction.add(n);
+        //ball.sphere.rotation.setFromVector3(ball.direction);
+    }
+
+    move(){
+        this.sphere.position.add(this.speed.copy(this.direction).multiplyScalar(20*this.clock.getDelta()));
+        //this.sphere.rotation.setFromVector3(this.sphere.rotation.toVector3().add(this.direction));
     }
 
     isMoving(){
         if(this.direction.x == 0 && this.direction.y == 0 && this.direction.z == 0){
-            return true;
+            return false;
         }
-        return false;
+        return true;
     }
 }

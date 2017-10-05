@@ -28,7 +28,7 @@ function onLoad() {
     //voegt test vierkant toe in het midden
     var test = new THREE.BoxGeometry(1,1,1);
     var testM = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-    var testMesh = new THREE.Mesh(test, testMesh);
+    var testMesh = new THREE.Mesh(test, testM);
     scene.add(testMesh);
     testMesh.position.x = 0;
     testMesh.position.y = 0;
@@ -54,13 +54,28 @@ function onLoad() {
     new ColoredBall(110,16,14),
     new ColoredBall(110,0,15)]
 
-    this.collisionBorder = new THREE.Raycaster();
-    this.speed = new THREE.Vector3();
+    this.borderGroup = new THREE.Group();
+    scene.add(this.borderGroup);
 
-    this.rotationVector = new THREE.Vector3(0,0,0.1);
+    //collision test border
+    var testCube =  new THREE.BoxGeometry(0,1,Table.LEN_Z);
+    var testMeshCube = new THREE.MeshBasicMaterial({ color: 0x000000 });
+    this.cubex1 = new THREE.Mesh(testCube, testMeshCube);
+    this.borderGroup.add(this.cubex1);
+    //scene.add(this.cube);
+    this.cubex1.position.x = Table.LEN_X / 2;
+    this.cubex1.position.y = 3.5;
+    this.cubex1.position.z = 0;
+    this.cubex2 = new THREE.Mesh().copy(this.cubex1);
+    this.borderGroup.add(this.cubex2);
+    this.cubex2.position.x = -Table.LEN_X / 2;
 
-    balls[1].direction.x = -1;
-    balls[0].direction.x = 1;
+    //this.rotationVector = new THREE.Vector3(0,0,0.1);
+
+    //balls[1].direction.x = -1;
+    balls[0].direction.x = 5;
+
+    this.raycaster = new THREE.Raycaster();
 
     camera.lookAt(new THREE.Vector3(0,0,0));
     draw();
@@ -70,14 +85,31 @@ function draw() {
     controls.update();
     requestAnimationFrame(draw);
 
-    balls[1].sphere.position.add(this.speed.copy(balls[1].direction).multiplyScalar(0.5));
-    balls[0].sphere.position.add(this.speed.copy(balls[0].direction).multiplyScalar(0.5));
-    balls[1].sphere.rotation.setFromVector3(balls[0].sphere.rotation.toVector3().add(this.rotationVector));
+    //balls[1].sphere.rotation.setFromVector3(balls[0].sphere.rotation.toVector3().add(this.rotationVector));
 
     for(var i = 0; i < balls.length; i++){
+        if(!balls[i].isMoving()){
+            continue;
+        }
+        balls[i].move();
         for(var j = 0; j < balls.length; j++){
+            if(balls[i] == balls[j]){continue;}
+            //collision between balls
             if(balls[i].isColliding(balls[j])){
                 balls[i].collision(balls[j]);
+            }
+        }
+        //collision border
+        var normal = new THREE.Vector3().copy(balls[i].direction);
+        this.raycaster.set(balls[i].sphere.position, normal.normalize());
+
+        var intersections = this.raycaster.intersectObjects(this.borderGroup.children);
+
+        if(intersections.length > 0) {
+            var intersection = intersections[0];
+
+            if(intersection.distance < 2) {
+                balls[i].direction.reflect(intersection.face.normal);
             }
         }
     }
