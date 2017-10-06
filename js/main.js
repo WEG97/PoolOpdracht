@@ -54,21 +54,7 @@ function onLoad() {
     new ColoredBall(110,16,14),
     new ColoredBall(110,0,15)]
 
-    this.borderGroup = new THREE.Group();
-    scene.add(this.borderGroup);
-
-    //collision test border
-    var testCube =  new THREE.BoxGeometry(0,1,Table.LEN_Z);
-    var testMeshCube = new THREE.MeshBasicMaterial({ color: 0x000000 });
-    this.cubex1 = new THREE.Mesh(testCube, testMeshCube);
-    this.borderGroup.add(this.cubex1);
-    //scene.add(this.cube);
-    this.cubex1.position.x = Table.LEN_X / 2;
-    this.cubex1.position.y = 3.5;
-    this.cubex1.position.z = 0;
-    this.cubex2 = new THREE.Mesh().copy(this.cubex1);
-    this.borderGroup.add(this.cubex2);
-    this.cubex2.position.x = -Table.LEN_X / 2;
+    this.tableComponents = new TableComponents();
 
     //this.rotationVector = new THREE.Vector3(0,0,0.1);
 
@@ -103,13 +89,23 @@ function draw() {
         var normal = new THREE.Vector3().copy(balls[i].direction);
         this.raycaster.set(balls[i].sphere.position, normal.normalize());
 
-        var intersections = this.raycaster.intersectObjects(this.borderGroup.children);
+        var intersections = this.raycaster.intersectObjects(this.tableComponents.borderGroup.children);
 
         if(intersections.length > 0) {
             var intersection = intersections[0];
 
-            if(intersection.distance < 2) {
+            if(intersection.distance < 3.5) {
                 balls[i].direction.reflect(intersection.face.normal);
+            }
+        }
+
+        var pockets = this.raycaster.intersectObjects(this.tableComponents.pocketGroup.children);
+
+        if(pockets.length > 0) {
+            var pocket = pockets[0];
+
+            if(pocket.distance < 1) {
+                balls[i].pooled();
             }
         }
     }

@@ -1,10 +1,10 @@
-var radius = 3.5;
-var mass = 1;
+radius = 3.5;
+mass = 1;
 
 class Ball{
     constructor(posX, posZ, number){
         this.ballNumber = number;
-        this.iPooled = false;
+        this.isPooled = false;
         this.geometry = new THREE.SphereGeometry( radius, 32, 32 );
         this.texture = 'images/balls/' + this.ballNumber + '.png';
         this.material = new THREE.MeshPhongMaterial({
@@ -38,12 +38,10 @@ class Ball{
             return false;
         }
 
-        var N = new THREE.Vector3();
-        N.copy(this.direction);
+        var N = new THREE.Vector3().copy(this.direction);
         N.normalize();
 
-        var C = new THREE.Vector3();
-        C.copy(ball.sphere.position);
+        var C = new THREE.Vector3().copy(ball.sphere.position);
         C.sub(this.sphere.position);
         var D = N.dot(C);
 
@@ -68,8 +66,7 @@ class Ball{
 
     collision(ball) {
         //normalized vector n from center to center of the two balls
-        var n = new THREE.Vector3();
-        n.subVectors(this.sphere.position, ball.sphere.position);
+        var n = new THREE.Vector3().subVectors(this.sphere.position, ball.sphere.position);
         n.normalize();
 
         //length of the component of each of the movement vectors along n
@@ -84,6 +81,12 @@ class Ball{
         //this.sphere.rotation.setFromVector3(this.direction);
         ball.direction.add(n);
         //ball.sphere.rotation.setFromVector3(ball.direction);
+    }
+
+    pooled(){
+        this.isPooled = true;
+        this.sphere.position.y = -100;
+        scene.remove(this.sphere);
     }
 
     move(){
