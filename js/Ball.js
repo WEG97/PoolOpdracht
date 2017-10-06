@@ -89,8 +89,8 @@ class Ball{
         scene.remove(this.sphere);
     }
 
-    move(){
-        this.sphere.position.add(this.speed.copy(this.direction).multiplyScalar(20*this.clock.getDelta()));
+    move(speed){
+        this.sphere.position.add(this.speed.copy(this.direction).multiplyScalar(0.2 * speed));
         //this.sphere.rotation.setFromVector3(this.sphere.rotation.toVector3().add(this.direction));
     }
 
@@ -99,5 +99,9 @@ class Ball{
             return false;
         }
         return true;
+    }
+
+    stopMoving() {
+        this.direction.set(0, 0, 0);
     }
 }

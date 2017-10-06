@@ -3,6 +3,7 @@ var height = window.innerHeight;
 var width = window.innerWidth;
 var debug = false;
 var balls = [];
+var speed = 1;
 
 function onLoad() {
 
@@ -73,11 +74,21 @@ function draw() {
 
     //balls[1].sphere.rotation.setFromVector3(balls[0].sphere.rotation.toVector3().add(this.rotationVector));
 
+    if(speed <= 0){
+        window.alert("Next Player!");
+        //set speed to one for next push
+        speed = 1;
+        //set direction off all balls to 0
+        for(var i = 0; i < balls.length; i++){
+            balls[i].stopMoving();
+        }
+    }
+
     for(var i = 0; i < balls.length; i++){
         if(!balls[i].isMoving()){
             continue;
         }
-        balls[i].move();
+        balls[i].move(speed);
         for(var j = 0; j < balls.length; j++){
             if(balls[i] == balls[j]){continue;}
             //collision between balls
@@ -98,7 +109,7 @@ function draw() {
                 balls[i].direction.reflect(intersection.face.normal);
             }
         }
-
+        //ball in hole
         var pockets = this.raycaster.intersectObjects(this.tableComponents.pocketGroup.children);
 
         if(pockets.length > 0) {
@@ -109,7 +120,7 @@ function draw() {
             }
         }
     }
-
+    speed  -= 0.001;
     window.addEventListener( 'resize', onWindowResize, false );
     renderer.render(scene, camera);
 };
