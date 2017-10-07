@@ -1,0 +1,75 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Pooltafel</title>
+		<style>
+			body {margin: 0; overflow: hidden}
+			canvas {width: 100%; height: 100%}
+		</style>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+		<link rel="stylesheet" href="css/style.css">
+
+		<!-- requisites -->
+		<script type="text/javascript" src="js/req/three.js"></script>
+		<script type="text/javascript" src="js/req/OrbitControls.js"></script> 
+		<script type="text/javascript" src="js/req/stats.js"></script>
+
+		<!-- javascripts, main.js moet altijd als de laatste geladen worden -->
+		<script type="text/javascript" src="js/Gui.js"></script>
+		<script type="text/javascript" src="js/Table.js"></script>
+		<script type="text/javascript" src="js/TableLight.js"></script>
+		<script type="text/javascript" src="js/Ball.js"></script>
+		<script type="text/javascript" src="js/WhiteBall.js"></script>
+		<script type="text/javascript" src="js/ColoredBall.js"></script>
+		<script type="text/javascript" src="js/Game.js"></script>
+		<script type="text/javascript" src="js/BallGame.js"></script>
+		<script type="text/javascript" src="js/main.js"></script>
+	</head>
+	<body onload="onLoad()">
+
+		<div id="overlay">
+			<div id="mainMenu" class="hide">
+				<div>
+					<h1>Speltest</h1>
+					<button type="button" onclick="gui.playGame()" class="btn btn-success btn-lg btn-block">Start Game</button>
+				</div>
+			</div>
+
+			<div id="controlsHud" class="hide">
+				<div class="player player1 unknown">
+					<h5>Player 1 (<span></span>)</h5>
+					<ul>
+						<li>?</li>
+						<li>?</li>
+						<li>?</li>
+						<li>?</li>
+						<li>?</li>
+						<li>?</li>
+						<li>?</li>
+					</ul>
+				</div>
+
+				<div class="player player2 unknown">
+					<h5>Player 2 (<span></span>)</h5>
+					<ul>
+						<li>?</li>
+						<li>?</li>
+						<li>?</li>
+						<li>?</li>
+						<li>?</li>
+						<li>?</li>
+						<li>?</li>
+					</ul>
+				</div>
+
+				<div id="statsDisplay"></div>
+			</div>
+
+			<div id="gameover" class="hide">
+				<h1>Player wint!</h1>
+			</div>
+
+			<div id="canvas"></div>
+		</div>
+	</body>
+</html>
