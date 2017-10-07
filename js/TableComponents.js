@@ -7,18 +7,18 @@ class TableComponents {
         scene.add(this.pocketGroup);
 
         //borders
-        this.borderGroup.add(new Border(0,5,Table.LEN_Z-15, Table.LEN_X / 2, 3.5, 0).cube);
-        this.borderGroup.add(new Border(0,5,Table.LEN_Z-15, -Table.LEN_X / 2, 3.5, 0).cube);
-        this.borderGroup.add(new Border((Table.LEN_X-25)/2,5,0, Table.LEN_X /4 - 1, 3.5, Table.LEN_Z / 2).cube);
-        this.borderGroup.add(new Border((Table.LEN_X-25)/2,5,0, -Table.LEN_X /4 + 1, 3.5, Table.LEN_Z / 2).cube);
-        this.borderGroup.add(new Border((Table.LEN_X-25)/2,5,0, Table.LEN_X /4 - 1, 3.5, -Table.LEN_Z / 2).cube);
-        this.borderGroup.add(new Border((Table.LEN_X-25)/2,5,0, -Table.LEN_X /4 + 1, 3.5, -Table.LEN_Z / 2).cube);
+        this.borderGroup.add(new Border(10,5,Table.LEN_Z-12, Table.LEN_X / 2 + 5, 3.5, 0).cube);
+        this.borderGroup.add(new Border(10,5,Table.LEN_Z-12, -Table.LEN_X / 2 - 5, 3.5, 0).cube);
+        this.borderGroup.add(new Border((Table.LEN_X-25)/2,5,10, Table.LEN_X /4 - 1, 3.5, Table.LEN_Z / 2 + 5).cube);
+        this.borderGroup.add(new Border((Table.LEN_X-25)/2,5,10, -Table.LEN_X /4 + 1, 3.5, Table.LEN_Z / 2 + 5).cube);
+        this.borderGroup.add(new Border((Table.LEN_X-25)/2,5,10, Table.LEN_X /4 - 1, 3.5, -Table.LEN_Z / 2 - 5).cube);
+        this.borderGroup.add(new Border((Table.LEN_X-25)/2,5,10, -Table.LEN_X /4 + 1, 3.5, -Table.LEN_Z / 2 - 5).cube);
 
         //pockets
         this.pocketGroup.add(new Pocket(7.5, 7.5, 20, 32, Table.LEN_X / 2 + 1, 1, Table.LEN_Z / 2 + 1).pocket);
-        this.pocketGroup.add(new Pocket(7.5, 7.5, 20, 32, Table.LEN_X / 2 + 1, 1, -Table.LEN_Z / 2 + 1).pocket);
+        this.pocketGroup.add(new Pocket(7.5, 7.5, 20, 32, Table.LEN_X / 2 + 1, 1, -Table.LEN_Z / 2 - 1).pocket);
         this.pocketGroup.add(new Pocket(7.5, 7.5, 20, 32, -Table.LEN_X / 2 + 1, 1, Table.LEN_Z / 2 + 1).pocket);
-        this.pocketGroup.add(new Pocket(7.5, 7.5, 20, 32, -Table.LEN_X / 2 + 1, 1, -Table.LEN_Z / 2 + 1).pocket);
+        this.pocketGroup.add(new Pocket(7.5, 7.5, 20, 32, -Table.LEN_X / 2 + 1, 1, -Table.LEN_Z / 2 - 1).pocket);
         this.pocketGroup.add(new Pocket(7.5, 7.5, 20, 32, 0, 1, Table.LEN_Z / 2 + 7).pocket);
         this.pocketGroup.add(new Pocket(7.5, 7.5, 20, 32, 0, 1, -Table.LEN_Z / 2 - 7).pocket);
     }
