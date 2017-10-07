@@ -11,7 +11,7 @@ class Ball{
             map: THREE.ImageUtils.loadTexture(this.texture),
             specular: 0x7c7c7c,
             ambient: 0x030303,
-            shininess: 20
+            shininess: 10
         });
         this.sphere = new THREE.Mesh(this.geometry, this.material);
         this.sphere.position.set(posX, radius-0.3, posZ);

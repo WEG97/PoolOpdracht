@@ -1,14 +1,21 @@
-var scene, renderer, camera, controls;
+var scene, renderer, camera, controls, gui, shot_line, t1, down_l, down_r;
 var height = window.innerHeight;
 var width = window.innerWidth;
-var debug = false;
+var stats = new Stats();
+stats.setMode(0);
+var debug = true;
 var balls = [];
-var speed = 1;
+var speed = 0;
+var dir = 0;
+var moving = false;
 
 function onLoad() {
 
+    gui = new Gui();
+    gui.show(document.getElementById('mainMenu'));
+    gui.hide(document.getElementById('sControls'));
     camera = new THREE.PerspectiveCamera(45, width / height, 1, 1000);
-    camera.position.set(-170, 70, 0);
+    camera.position.set(0, 250, 0);
     scene = new THREE.Scene();
     scene.add(camera);
 
@@ -17,7 +24,8 @@ function onLoad() {
     renderer.shadowMap.enabled = true;
     renderer.shadowMapSoft = true;
     renderer.setClearColor(0x262626, 1);
-    document.body.appendChild(renderer.domElement);
+    var canvasContainer = document.getElementById('canvas');
+    canvasContainer.appendChild(renderer.domElement);
 
     addLights();
 
@@ -25,15 +33,6 @@ function onLoad() {
     controls = new THREE.OrbitControls(camera, renderer.domElement);
     controls.enableZoom = true;
     controls.enablePan = true;
-
-    //voegt test vierkant toe in het midden
-    var test = new THREE.BoxGeometry(1,1,1);
-    var testM = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-    var testMesh = new THREE.Mesh(test, testM);
-    scene.add(testMesh);
-    testMesh.position.x = 0;
-    testMesh.position.y = 0;
-    testMesh.position.z = 0;
 
     var table = new Table();
 
@@ -55,12 +54,23 @@ function onLoad() {
     new ColoredBall(110,16,14),
     new ColoredBall(110,0,15)]
 
+    var line_material = new THREE.MeshLambertMaterial({color: 0xffffff});
+    var line_geometry = new THREE.CylinderGeometry(1, 1, 50, 5, 5, false);
+    shot_line = new THREE.Mesh(line_geometry, line_material);
+    shot_line.rotation.z = 0;
+    shot_line.position.x = 150 + 50*Math.sin(shot_line.rotation.z);
+    shot_line.position.y = 0 + 50*Math.cos(shot_line.rotation.z);
+    shot_line.position.z = -4;
+    shot_line.rotation.z = Math.PI / 2;
+    shot_line.overdraw = true;
+    scene.add(shot_line);
+	
     this.tableComponents = new TableComponents();
 
     //this.rotationVector = new THREE.Vector3(0,0,0.1);
 
     //balls[1].direction.x = -1;
-    balls[0].direction.x = 5;
+    //balls[0].direction.x = 5;
 
     this.raycaster = new THREE.Raycaster();
 
@@ -69,19 +79,32 @@ function onLoad() {
 };
 
 function draw() {
+    stats.begin();
     controls.update();
+    stats.end();
     requestAnimationFrame(draw);
 
     //balls[1].sphere.rotation.setFromVector3(balls[0].sphere.rotation.toVector3().add(this.rotationVector));
 
     if(speed <= 0){
-        window.alert("Next Player!");
-        //set speed to one for next push
-        speed = 1;
+        moving = false;
+		
         //set direction off all balls to 0
         for(var i = 0; i < balls.length; i++){
             balls[i].stopMoving();
         }
+    }
+
+    //als ballen niet bewegen, breng keu naar het veld zodat je de balrichting kan bepalen
+    if (moving == false) {
+        gui.show(document.getElementById('sControls'));
+        shot_line.material.opacity = 1;
+        shot_line.position.x = balls[0].sphere.position.x  + 25*Math.cos(dir*Math.PI/180);
+        shot_line.position.y = balls[0].sphere.position.z + 3;
+        shot_line.position.z = balls[0].sphere.position.z + 25*Math.sin(dir*Math.PI/180);
+        shot_line.rotation.y = dir*Math.PI/180;
+    } else {
+        shot_line.position.z = 10000;
     }
 
     for(var i = 0; i < balls.length; i++){
@@ -120,7 +143,10 @@ function draw() {
             }
         }
     }
-    speed  -= 0.001;
+
+    if (speed > 0)
+        speed  -= 0.001;
+    
     window.addEventListener( 'resize', onWindowResize, false );
     renderer.render(scene, camera);
 };
@@ -132,6 +158,65 @@ function addLights() {
     var tableLight1 = new TableLight(278 / 4, 150, 0);
     var tableLight2 = new TableLight(-278 / 4, 150, 0);
 };
+
+function press (which) {
+    if (which == 'l')
+        down_l = true;
+    if (which == 'r')
+        down_r = true;
+    t1 = window.setInterval('rotate()', 20);
+}
+
+function unpress (which) {
+    if (which == 'l')
+        down_l = false;
+    if (which == 'r')
+        down_r = false;
+    window.clearInterval(t1);
+}
+
+function rotate () {
+    if (down_r) {
+        if (dir+1 > 180)
+            dir = -180+1;
+        else
+            dir += 1;
+    }
+    if (down_l) {
+        if(dir-1 < -180)
+            dir = 180 - (Math.abs(dir-1)-180);
+        else
+            dir -= 1;
+    }
+}
+
+//laat bal bewegen, force is kracht en dir is de richting
+function launch() {
+    speed = 1;
+    var force = document.getElementById('range_strength').value;
+    var vx0, vy0;
+    if (!moving) {
+        moving = true;
+        gui.hide(document.getElementById('sControls'));
+        dir = dir*Math.PI/180;
+
+        if (force*Math.cos(dir) != 0)
+            vx0 = 100 / (force*Math.cos(dir));
+        else
+            vx0 = 0;
+
+        if (force*Math.sin(dir))
+            vy0 = 100/(force*Math.sin(dir));
+        else
+            vy0 = 0;
+
+        console.log(vx0);
+        console.log(vy0);
+        balls[0].direction.x = vx0;
+        balls[0].direction.z = vy0;
+        dir = 0;
+    }
+}
 
 //resizes window after window size changed
 function onWindowResize() {
