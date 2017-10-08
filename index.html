@@ -1,0 +1,84 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Pooltafel</title>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+		<link rel="stylesheet" href="css/styles.css">
+
+		<!-- requisites -->
+		<script type="text/javascript" src="js/req/three.js"></script>
+		<script type="text/javascript" src="js/req/OrbitControls.js"></script> 
+		<script type="text/javascript" src="js/req/stats.js"></script>
+
+		<!-- javascripts, main.js moet altijd als de laatste geladen worden -->
+		<script type="text/javascript" src="js/Table.js"></script>
+		<script type="text/javascript" src="js/TableComponents.js"></script>
+		<script type="text/javascript" src="js/TableLight.js"></script>
+		<script type="text/javascript" src="js/Ball.js"></script>
+		<script type="text/javascript" src="js/WhiteBall.js"></script>
+		<script type="text/javascript" src="js/ColoredBall.js"></script>
+		<script type="text/javascript" src="js/BallGame.js"></script>
+		<script type="text/javascript" src="js/Gui.js"></script>
+		<script type="text/javascript" src="js/main.js"></script>
+	</head>
+	<body onload="onLoad()">
+			<div id="overlay">
+					<div id="mainMenu" class="hide">
+						<div>
+							<h1>Speltest</h1>
+							<button type="button" onclick="gui.playGame()" class="btn btn-success btn-lg btn-block">Start Game</button>
+						</div>
+					</div>
+		
+					<div id="controlsHud" class="hide">
+						<div class="player player1 unknown">
+							<h5>Player 1 (<span></span>)</h5>
+							<ul>
+								<li>?</li>
+								<li>?</li>
+								<li>?</li>
+								<li>?</li>
+								<li>?</li>
+								<li>?</li>
+								<li>?</li>
+							</ul>
+						</div>
+		
+						<div class="player player2 unknown">
+							<h5>Player 2 (<span></span>)</h5>
+							<ul>
+								<li>?</li>
+								<li>?</li>
+								<li>?</li>
+								<li>?</li>
+								<li>?</li>
+								<li>?</li>
+								<li>?</li>
+							</ul>
+						</div>
+		
+						<div class="shootControls" id="sControls">
+							<div class="power">
+								Strength:
+								<form>
+									<input id="range_strength" type="range" name="strength" min="1" max="80">
+								</form>
+							</div>
+							<div>
+								<button id="b_left" type="button" class="btn btn-alert" onmousedown="press('l')" onmouseup="unpress('l')" onmouseout="unpress('l')">Left</button>
+								<button id="btn_ball" type="button" class="btn btn-success" onclick="launch()">Hit</button>
+								<button id="b_right" type="button" class="btn btn-class" onmousedown="press('r')" onmouseup="unpress('r')" onmouseout="unpress('r')">Right</button>
+							</div>
+						</div>
+
+						<div id="statsDisplay"></div>
+					</div>
+		
+					<div id="gameover" class="hide">
+						<h1>Player wint!</h1>
+					</div>
+					<div id="canvas"></div>
+				</div>
+	</body>
+</html>
