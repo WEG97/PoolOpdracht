@@ -66,11 +66,7 @@ Gui.prototype.updateBalls = function(ballArr, p1side, p2side) {
       if (ballArr.indexOf(i) > -1) {
   
       } else {
-<<<<<<< HEAD
         Gui.addClass(el, 'pocketed');
-=======
-        GameGui.addClass(el, 'pocketed');
->>>>>>> 99667f7af8da51e902f77d585bae981121aa030f
       }
   
       elem.appendChild(el);
@@ -83,11 +79,7 @@ Gui.prototype.updateBalls = function(ballArr, p1side, p2side) {
       if (ballArr.indexOf(i) > -1) {
   
       } else {
-<<<<<<< HEAD
         Gui.addClass(el, 'pocketed');
-=======
-        GameGui.addClass(el, 'pocketed');
->>>>>>> 99667f7af8da51e902f77d585bae981121aa030f
       }
   
       elem.appendChild(el);
