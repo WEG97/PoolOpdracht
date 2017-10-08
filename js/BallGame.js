@@ -73,7 +73,7 @@ class BallGame {
 
     whitePocketed() {
         console.log("confirm_end2");
+        this.turn = this.turn == 'player1' ? 'player2' : 'player1';
         this.endGame();
-        alert("Witte bal gepoolt, dus " + winner + "wint!");
     }
 }
