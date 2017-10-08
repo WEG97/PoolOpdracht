@@ -58,7 +58,7 @@ function onLoad() {
             
         var line_material = new THREE.MeshLambertMaterial({color: 0xffffff});
         var line_geometry = new THREE.CylinderGeometry(1, 1, 50, 5, 5, false);
-        line_geometry.translate(0,-25,0);
+        line_geometry.translate(0, 25, 0);
         shot_line = new THREE.Mesh(line_geometry, line_material);
         shot_line.rotation.z = 0;
         shot_line.position.x = 150 + 50*Math.sin(shot_line.rotation.z);
@@ -101,10 +101,10 @@ function draw() {
     if (moving == false) {
         gui.show(document.getElementById('sControls'));
         shot_line.material.opacity = 1;
-        shot_line.position.x = balls[0].sphere.position.x + 25*Math.cos(dir*Math.PI/180);
+        shot_line.position.x = balls[0].sphere.position.x;
         shot_line.position.y = balls[0].sphere.position.y + 1;
-        shot_line.position.z = balls[0].sphere.position.z + 25*Math.sin(dir*Math.PI/180);
-        shot_line.rotation.y = (dir*Math.PI/180)/4;
+        shot_line.position.z = balls[0].sphere.position.z;
+        shot_line.rotation.y = dir*Math.PI/180;
     } else {
         shot_line.position.z = 10000;
     }

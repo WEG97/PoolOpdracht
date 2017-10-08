@@ -24,10 +24,10 @@ body{
   position: absolute;
   padding-top: 15%;
   width: 100%;
-  background-color: green;
   z-index: 10;
   height: 100%;
   text-align: center;
+  background-color: rgba(0, 255, 0, 0.23);
   color: #eaeaea;
 }
 
@@ -113,7 +113,7 @@ body{
 }
 
 .player2 {
-  left: 800px;
+  left: 210px;
 }
 
 .player h5 {
@@ -141,8 +141,8 @@ body{
   display: block;
   position: absolute;
   width: 200px;
-  top: 395px;
-  left: 380px;
+  top: 55px;
+  left: 5px;
   text-align: center;
 }
 

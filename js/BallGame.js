@@ -27,6 +27,12 @@ class BallGame {
         this.startTurn();
     }
 
+    endGame() {
+        this.state = 'gameover';
+        var winner = this.turn == 'player1' ? 'Player 1' : 'Player 2';
+        gui.showEndGame(winner);
+    }
+
     colorPocketed(name) {
         if (typeof name === 'undefined')
             return;
@@ -66,13 +72,9 @@ class BallGame {
     }
 
     whitePocketed() {
-        
-    }
-
-    endGame() {
-        this.state = 'gameover';
-        var winner = this.turn == 'player1' ? 'Player 1' : 'Player 2';
-        gui.showEndGame(winner);
+        console.log("confirm_end2");
+        endGame();
+        alert("Witte bal gepoolt, dus " + winner + "wint!");
     }
 }
 

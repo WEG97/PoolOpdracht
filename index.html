@@ -62,14 +62,14 @@
 							<div class="power">
 								Strength:
 								<form>
-									<input id="range_strength" type="range" name="strength" min="1" max="80">
+									<input id="range_strength" type="range" name="strength" min="0" max="99">
 								</form>
 							</div>
 							<div>
-								<button id="b_left" type="button" class="btn btn-alert" onmousedown="press('l')" onmouseup="unpress('l')" onmouseout="unpress('l')">Left</button>
-								<button id="btn_ball" type="button" class="btn btn-success" onclick="launch()">Hit</button>
-								<button id="b_right" type="button" class="btn btn-class" onmousedown="press('r')" onmouseup="unpress('r')" onmouseout="unpress('r')">Right</button>
+								<div class="col-lg-6"><button id="b_left" type="button" class="btn btn-primary" onmousedown="press('l')" onmouseup="unpress('l')" onmouseout="unpress('l')">Left</button></div>
+								<div class="col-lg-6"><button id="b_right" type="button" class="btn btn-danger" onmousedown="press('r')" onmouseup="unpress('r')" onmouseout="unpress('r')">Right</button></div>
 							</div>
+							<button id="btn_ball" type="button" class="btn btn-default" onclick="launch()">Hit</button>
 						</div>
 
 						<div id="statsDisplay"></div>
