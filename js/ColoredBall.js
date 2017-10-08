@@ -4,10 +4,10 @@ class ColoredBall extends Ball{
         this.isHit = false;
     }
 
-    pooled(){
+    /**pooled(){
         //ballGame.colorPocketed(this.ballNumber); werkt op een of ondere manier niet
         this.isPooled = true;
         this.sphere.position.y = -100;
         scene.remove(this.sphere);
-    }
+    }**/
 }

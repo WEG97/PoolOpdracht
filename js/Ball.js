@@ -13,11 +13,12 @@ class Ball{
         this.material = new THREE.MeshPhongMaterial({
             map: THREE.ImageUtils.loadTexture(this.texture),
             specular: 0x7c7c7c,
-            ambient: 0x030303,
-            shininess: 10
+            ambient: 0x030303
         });
         this.sphere = new THREE.Mesh(this.geometry, this.material);
         this.sphere.position.set(posX, this.posY, posZ);
+        this.sphere.receiveShadow = true;
+        this.sphere.castShadow = true;
         scene.add(this.sphere);
         this.direction = new THREE.Vector3();
         this.direction.set(0,0,0);
@@ -86,9 +87,13 @@ class Ball{
         //ball.sphere.rotation.setFromVector3(ball.direction);
     }
 
-    /**pooled(){
+    pooled(){
         this.isPooled = true;
-    }**/
+        this.sphere.position.y = -100;
+        scene.remove(this.sphere);
+        if (this.ballNumber != 0)
+            ballGame.colorPocketed(this.ballNumber);
+    }
 
     move(speed){
         this.sphere.position.add(this.speed.copy(this.direction).multiplyScalar(0.2 * speed));

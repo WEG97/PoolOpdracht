@@ -20,16 +20,6 @@ body{
   z-index: 0;
 }
 
-#prog-bar {
-  width: 1%;
-}
-
-#loading {
-  position: absolute;
-  top: 35%;
-  width: 100%;
-}
-
 #gameover {
   position: absolute;
   padding-top: 15%;
@@ -41,24 +31,6 @@ body{
   color: #eaeaea;
 }
 
-.progress {
-  width: 95%;
-  margin: 0 auto;
-}
-
-#loading h1 {
-  color: #fafafa;
-  text-align: center;
-}
-
-.control-button {
-  margin: 1% auto;
-}
-
-.guide {
-  text-align: center;
-}
-
 .center {
   margin: 0 auto;
   width: 80%;
@@ -68,7 +40,6 @@ body{
   display: none !important;
 }
 
-/* breaks accessibility but these look ugly */
 * {
   outline: none !important;
 }
@@ -191,82 +162,16 @@ body{
   margin-top: 2px;
 }
 
-.gamelog {
-  background-color: rgba(0, 0, 0, 0.25);
-  border-radius: 3px;
-  border: 1px solid #000;
-  display: block;
-  position: absolute;
-  width: 300px;
-  top: 450px;
-  left: 5px;
-  text-align: center;
-  z-index: 2;
-  height: 150px;
-}
-
-.gamelog {
-  text-align: left;
-  margin: 0;
-  margin-left: 3px;
-  color: #dadada;
-  height: 14px;
-}
-
-.gamelog {
-  height: 20px;
-  padding: 0 3px;
-}
-
-.gamelog:hover {
-  height: 130px;
-  top: 340px;
-}
-
-.gamelog li {
-  display: none;
-}
-
-.gamelog li:nth-last-child(-n+1) {
-  display: block;
-}
-
-.gamelog:hover li:nth-last-child(-n+6) {
-  display: block;
-}
-
-.gamelog li {
-  margin: 0;
-  padding: 0;
-  margin-top: 0px;
-}
-
-.timer {
-  background-color: rgba(255, 255, 255, 0.75);
-  border-radius: 3px;
-  border: 1px solid #000;
-  display: block;
-  position: absolute;
-  width: 50px;
-  height: 50px;
-  top: 420px;
-  left: 900px;
-  text-align: center;
-  font-size: 36px;
-  z-index: 1;
-}
-
 .player.solid span:before {
-  content: 'Solid';
+  content: 'Vol';
 }
 
 .player.striped span:before {
-  content: 'Striped';
+  content: 'Gestreept';
 }
 .player.unknown span:before {
   content: '?';
 }
-
 
 #stats {
     position: absolute;

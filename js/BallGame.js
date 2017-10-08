@@ -26,9 +26,57 @@ class BallGame {
         this.turn = this.turn == 'player1' ? 'player2' : 'player1';
         this.startTurn();
     }
+
+    colorPocketed(name) {
+        if (typeof name === 'undefined')
+            return;
+        var ballno = 0;
+        for (var i = 0; i < this.ingameBalls.length; i++) {
+            if (name == this.ingameBalls[i]) {
+                ballno = this.ingameBalls[i];
+                this.ingameBalls.splice(i, 1);
+                break;
+            }
+        }
+        if (ballno == 0)
+            return;
+
+        if (ballno == 8) {
+            if (this.ingameBalls.length > 1) {
+                this.turn = this.turn == 'player1' ? 'player2' : 'player1';
+            }
+            this.pocketEvent = true;
+
+            //win
+            this.endGame();
+        } else {
+            if (this.sides.player1 == '?' || this.sides.player2 == '?') {
+                this.sides[this.turn] = ballno < 8 ? 'solid' : 'striped';
+                this.sides[this.turn == 'player1' ? 'player2' : 'player1'] = ballno > 8 ? 'solid' : 'striped';
+                this.pocketEvent = true;
+            } else {
+                if ((this.sides[this.turn] == 'solid' && ballno < 8) || (this.sides[this.turn] == 'striped' && ballno > 8)) {
+                    //nog een beurt
+                    this.pocketEvent = true;
+                } else {
+                    this.pocketEvent = false;
+                }
+            }
+        }
+    }
+
+    whitePocketed() {
+        
+    }
+
+    endGame() {
+        this.state = 'gameover';
+        var winner = this.turn == 'player1' ? 'Player 1' : 'Player 2';
+        gui.showEndGame(winner);
+    }
 }
 
-/*var BallGame = function() {
+/*var this = function() {
     this.ingameBalls = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15];
     this.turn = 'player1';
     this.sides = {
@@ -43,29 +91,29 @@ class BallGame {
     this.startTurn();
 };
 
-BallGame.prototype.startTurn = function () {
-    if (ballGame.state == 'gameover')
+this.prototype.startTurn = function () {
+    if (this.state == 'gameover')
         return;
 
-    ballGame.state = 'turn';
-    gui.updateTurn(ballGame.turn);  
-    gui.updateBalls(ballGame.ingameBalls, ballGame.sides.player1, ballGame.sides.player2);
+    this.state = 'turn';
+    gui.updateTurn(this.turn);  
+    gui.updateBalls(this.ingameBalls, this.sides.player1, this.sides.player2);
     
     
 };
 
-BallGame.prototype.whitePocketed = function() {
+this.prototype.whitePocketed = function() {
 
 }
 
-BallGame.prototype.colorPocketed = function(name) {
+this.prototype.colorPocketed = function(name) {
     if (typeof name === 'undefined')
         return;
     var ballno = 0;
-    for (var i = 0; i < ballGame.ingameBalls.length; i++) {
-        if (name == ballGame.ingameBalls[i] + 'ball') {
-            ballno = ballGame.ingameBalls[i];
-            ballGame.ingameBalls.splice(i, 1);
+    for (var i = 0; i < this.ingameBalls.length; i++) {
+        if (name == this.ingameBalls[i] + 'ball') {
+            ballno = this.ingameBalls[i];
+            this.ingameBalls.splice(i, 1);
             break;
         }
     }
@@ -73,36 +121,36 @@ BallGame.prototype.colorPocketed = function(name) {
         return;
 
     if (ballno == 8) {
-        if (ballGame.ingameBalls.length > 1) {
-            ballGame.turn = ballGame.turn == 'player1' ? 'player2' : 'player1';
+        if (this.ingameBalls.length > 1) {
+            this.turn = this.turn == 'player1' ? 'player2' : 'player1';
         }
-        ballGame.pocketEvent = true;
+        this.pocketEvent = true;
 
         //win
-        ballGame.endGame();
+        this.endGame();
     } else {
-        if (ballGame.sides.player1 == '?' || ballGame.sides.player2 == '?') {
-            ballGame.sides[ballGame.turn] = ballno < 8 ? 'solid' : 'striped';
-            ballGame.sides[ballGame.turn == 'player1' ? 'player2' : 'player1'] = ballno > 8 ? 'solid' : 'striped';
-            ballGame.pocketEvent = true;
+        if (this.sides.player1 == '?' || this.sides.player2 == '?') {
+            this.sides[this.turn] = ballno < 8 ? 'solid' : 'striped';
+            this.sides[this.turn == 'player1' ? 'player2' : 'player1'] = ballno > 8 ? 'solid' : 'striped';
+            this.pocketEvent = true;
         } else {
-            if ((ballGame.sides[ballGame.turn] == 'solid' && ballno < 8) || (ballGame.sides[ballGame.turn] == 'striped' && ballno > 8)) {
+            if ((this.sides[this.turn] == 'solid' && ballno < 8) || (this.sides[this.turn] == 'striped' && ballno > 8)) {
                 //nog een beurt
-                ballGame.pocketEvent = true;
+                this.pocketEvent = true;
             } else {
-                ballGame.pocketEvent = false;
+                this.pocketEvent = false;
             }
         }
     }
 }
 
-BallGame.prototype.switchSides = function() {
-    ballGame.turn = ballGame.turn == 'player1' ? 'player2' : 'player1';
-    ballGame.startTurn();
+this.prototype.switchSides = function() {
+    this.turn = this.turn == 'player1' ? 'player2' : 'player1';
+    this.startTurn();
 }
 
-BallGame.prototype.endGame = function() {
-    ballGame.state = 'gameover';
-    var winner = ballGame.turn == 'player1' ? 'Player 1' : 'Player 2';
+this.prototype.endGame = function() {
+    this.state = 'gameover';
+    var winner = this.turn == 'player1' ? 'Player 1' : 'Player 2';
     gui.showEndGame(winner);
 }*/

@@ -34,44 +34,41 @@ function onLoad() {
     controls = new THREE.OrbitControls(camera, renderer.domElement);
     controls.enableZoom = true;
     controls.enablePan = true;
-
+    
+    //init 3d objecten
     var table = new Table();
+        
+        balls = [
+        new WhiteBall(-80,0),
+        new ColoredBall(83,0,1),
+        new ColoredBall(90,4,2),
+        new ColoredBall(103,-12,3),
+        new ColoredBall(103,4,4),
+        new ColoredBall(110,-8,5),
+        new ColoredBall(103,12,6),
+        new ColoredBall(110,8,7),
+        new ColoredBall(96,0,8),
+        new ColoredBall(90,-4,9),
+        new ColoredBall(96,8,10),
+        new ColoredBall(96,-8,11),
+        new ColoredBall(103,-4,12),
+        new ColoredBall(110,-16,13),
+        new ColoredBall(110,16,14),
+        new ColoredBall(110,0,15)]
+            
+        var line_material = new THREE.MeshLambertMaterial({color: 0xffffff});
+        var line_geometry = new THREE.CylinderGeometry(1, 1, 50, 5, 5, false);
+        line_geometry.translate(0,-25,0);
+        shot_line = new THREE.Mesh(line_geometry, line_material);
+        shot_line.rotation.z = 0;
+        shot_line.position.x = 150 + 50*Math.sin(shot_line.rotation.z);
+        shot_line.position.y = 0 + 50*Math.cos(shot_line.rotation.z);
+        shot_line.position.z = -4;
+        shot_line.rotation.z = Math.PI / 2;
+        shot_line.overdraw = true;
+        scene.add(shot_line);
 
-    balls = [
-    new WhiteBall(-80,0),
-    new ColoredBall(83,0,1),
-    new ColoredBall(90,4,2),
-    new ColoredBall(103,-12,3),
-    new ColoredBall(103,4,4),
-    new ColoredBall(110,-8,5),
-    new ColoredBall(103,12,6),
-    new ColoredBall(110,8,7),
-    new ColoredBall(96,0,8),
-    new ColoredBall(90,-4,9),
-    new ColoredBall(96,8,10),
-    new ColoredBall(96,-8,11),
-    new ColoredBall(103,-4,12),
-    new ColoredBall(110,-16,13),
-    new ColoredBall(110,16,14),
-    new ColoredBall(110,0,15)]
-
-    var line_material = new THREE.MeshLambertMaterial({color: 0xffffff});
-    var line_geometry = new THREE.CylinderGeometry(1, 1, 50, 5, 5, false);
-    shot_line = new THREE.Mesh(line_geometry, line_material);
-    shot_line.rotation.z = 0;
-    shot_line.position.x = 150 + 50*Math.sin(shot_line.rotation.z);
-    shot_line.position.y = 0 + 50*Math.cos(shot_line.rotation.z);
-    shot_line.position.z = -4;
-    shot_line.rotation.z = Math.PI / 2;
-    shot_line.overdraw = true;
-    scene.add(shot_line);
-	
     this.tableComponents = new TableComponents();
-
-    //this.rotationVector = new THREE.Vector3(0,0,0.1);
-
-    //balls[1].direction.x = -1;
-    //balls[0].direction.x = 5;
 
     this.raycaster = new THREE.Raycaster();
 
@@ -107,7 +104,7 @@ function draw() {
         shot_line.position.x = balls[0].sphere.position.x + 25*Math.cos(dir*Math.PI/180);
         shot_line.position.y = balls[0].sphere.position.y + 1;
         shot_line.position.z = balls[0].sphere.position.z + 25*Math.sin(dir*Math.PI/180);
-        shot_line.rotation.y = dir*Math.PI/180;
+        shot_line.rotation.y = (dir*Math.PI/180)/4;
     } else {
         shot_line.position.z = 10000;
     }
@@ -145,6 +142,10 @@ function draw() {
 
             if(pocket.distance < 1) {
                 balls[i].pooled();
+                if (balls[i].ballNumber == balls[0].ballNumber)
+                    ballGame.whitePocketed();
+                else
+                    ballGame.colorPocketed(balls[i].ballNumber);
             }
         }
     }
@@ -170,6 +171,7 @@ function press (which) {
     if (which == 'r')
         down_r = true;
     t1 = window.setInterval('rotate()', 20);
+    console.log("dir: " + dir);
 }
 
 function unpress (which) {
@@ -199,7 +201,9 @@ function rotate () {
 function launch() {
     speed = 1;
     turnChange = true;
+    console.log("dir: " + dir);
     var force = 100 - (document.getElementById('range_strength').value);
+    console.log("power: " + force);
     var vx0, vy0;
     if (!moving) {
         moving = true;
