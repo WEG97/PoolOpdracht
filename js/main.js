@@ -1,25 +1,14 @@
-<<<<<<< HEAD
 var scene, renderer, camera, controls, gui, shot_line, t1, down_l, down_r, ballGame;
-=======
-var scene, renderer, camera, controls, gui, ballGame, shot_line, t1, down_l, down_r;
->>>>>>> 99667f7af8da51e902f77d585bae981121aa030f
 var height = window.innerHeight;
 var width = window.innerWidth;
 var stats = new Stats();
 stats.setMode(0);
-<<<<<<< HEAD
 var debug = false;
-=======
-var debug = true;
->>>>>>> 99667f7af8da51e902f77d585bae981121aa030f
 var balls = [];
 var speed = 0;
 var dir = 0;
 var moving = false;
-<<<<<<< HEAD
 var turnChange = false;
-=======
->>>>>>> 99667f7af8da51e902f77d585bae981121aa030f
 
 function onLoad() {
 
@@ -105,13 +94,10 @@ function draw() {
         for(var i = 0; i < balls.length; i++){
             balls[i].stopMoving();
         }
-<<<<<<< HEAD
 
         if (turnChange)
             ballGame.switchSides();
             turnChange = false;
-=======
->>>>>>> 99667f7af8da51e902f77d585bae981121aa030f
     }
 
     //als ballen niet bewegen, breng keu naar het veld zodat je de balrichting kan bepalen
@@ -119,11 +105,7 @@ function draw() {
         gui.show(document.getElementById('sControls'));
         shot_line.material.opacity = 1;
         shot_line.position.x = balls[0].sphere.position.x  + 25*Math.cos(dir*Math.PI/180);
-<<<<<<< HEAD
         shot_line.position.y = balls[0].sphere.position.y + 1;
-=======
-        shot_line.position.y = balls[0].sphere.position.z + 3;
->>>>>>> 99667f7af8da51e902f77d585bae981121aa030f
         shot_line.position.z = balls[0].sphere.position.z + 25*Math.sin(dir*Math.PI/180);
         shot_line.rotation.y = dir*Math.PI/180;
     } else {
@@ -216,25 +198,12 @@ function rotate () {
 //laat bal bewegen, force is kracht en dir is de richting
 function launch() {
     speed = 1;
-<<<<<<< HEAD
-    turnChange = true;
-    var force = document.getElementById('range_strength').value;
-    console.log("Force: " + force);
-    var vx0, vy0;
-    if (!moving) {
-        moving = true;
-        console.log("dir: " + dir);
-        gui.hide(document.getElementById('sControls'));
-        dir = dir*Math.PI/180;
-        console.log("dir_rad: " + dir);
-=======
     var force = document.getElementById('range_strength').value;
     var vx0, vy0;
     if (!moving) {
         moving = true;
         gui.hide(document.getElementById('sControls'));
         dir = dir*Math.PI/180;
->>>>>>> 99667f7af8da51e902f77d585bae981121aa030f
 
         if (force*Math.cos(dir) != 0)
             vx0 = 100 / (force*Math.cos(dir));
@@ -246,18 +215,10 @@ function launch() {
         else
             vy0 = 0;
 
-<<<<<<< HEAD
         console.log("vx0: " + vx0);
         console.log("vy0: " + vy0);
         balls[0].direction.x = vx0;
         balls[0].direction.z = vy0;
-=======
-        console.log(vx0);
-        console.log(vy0);
-        balls[0].direction.x = vx0;
-        balls[0].direction.z = vy0;
-        dir = 0;
->>>>>>> 99667f7af8da51e902f77d585bae981121aa030f
     }
 }
 
