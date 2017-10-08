@@ -3,6 +3,9 @@ mass = 1;
 
 class Ball{
     constructor(posX, posZ, number){
+        this.posX = posX;
+        this.posZ = posZ;
+        this.posY = radius-0.3;
         this.ballNumber = number;
         this.isPooled = false;
         this.geometry = new THREE.SphereGeometry( radius, 32, 32 );
@@ -14,7 +17,7 @@ class Ball{
             shininess: 10
         });
         this.sphere = new THREE.Mesh(this.geometry, this.material);
-        this.sphere.position.set(posX, radius-0.3, posZ);
+        this.sphere.position.set(posX, this.posY, posZ);
         scene.add(this.sphere);
         this.direction = new THREE.Vector3();
         this.direction.set(0,0,0);
@@ -83,11 +86,9 @@ class Ball{
         //ball.sphere.rotation.setFromVector3(ball.direction);
     }
 
-    pooled(){
+    /**pooled(){
         this.isPooled = true;
-        this.sphere.position.y = -100;
-        scene.remove(this.sphere);
-    }
+    }**/
 
     move(speed){
         this.sphere.position.add(this.speed.copy(this.direction).multiplyScalar(0.2 * speed));

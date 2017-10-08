@@ -1,4 +1,4 @@
-var scene, renderer, camera, controls, gui, shot_line, t1, down_l, down_r;
+var scene, renderer, camera, controls, gui, ballGame, shot_line, t1, down_l, down_r;
 var height = window.innerHeight;
 var width = window.innerWidth;
 var stats = new Stats();

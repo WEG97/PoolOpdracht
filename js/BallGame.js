@@ -19,7 +19,7 @@ BallGame.prototype.startTurn = function () {
 
     ballGame.state = 'turn';
     gui.updateTurn(ballGame.turn);  
-    gui.updateBalls(ingameBalls, ballGame.sides.player1, ballGame.sides.player2);
+    gui.updateBalls(this.ingameBalls, ballGame.sides.player1, ballGame.sides.player2);
     
     
 };
@@ -31,14 +31,15 @@ BallGame.prototype.whitePocketed = function() {
 BallGame.prototype.colorPocketed = function(name) {
     if (typeof name === 'undefined')
         return;
-    var ballno = 0;
-    for (var i = 0; i < ballGame.ingameBalls.length; i++) {
+    var ballno = name;
+    window.alert(ballno);
+    /**for (var i = 0; i < ballGame.ingameBalls.length; i++) {
         if (name == ballGame.ingameBalls[i] + 'ball') {
             ballno = ballGame.ingameBalls[i];
             ballGame.ingameBalls.splice(i, 1);
             break;
         }
-    }
+    }**/
     if (ballno == 0)
         return;
 
