@@ -92,9 +92,10 @@ function draw() {
             balls[i].stopMoving();
         }
 
-        if (turnChange)
+        if (turnChange) {
             ballGame.switchSides();
             turnChange = false;
+        }
     }
 
     //als ballen niet bewegen, breng keu naar het veld zodat je de balrichting kan bepalen
@@ -216,7 +217,7 @@ function launch() {
             vx0 = 0;
 
         if (force*Math.sin(dir))
-            vy0 = 100/(force*Math.sin(dir));
+            vy0 = 100/(force*Math.sin(dir)) * -1;
         else
             vy0 = 0;
 
