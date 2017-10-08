@@ -104,7 +104,7 @@ function draw() {
     if (moving == false) {
         gui.show(document.getElementById('sControls'));
         shot_line.material.opacity = 1;
-        shot_line.position.x = balls[0].sphere.position.x  + 25*Math.cos(dir*Math.PI/180);
+        shot_line.position.x = balls[0].sphere.position.x + 25*Math.cos(dir*Math.PI/180);
         shot_line.position.y = balls[0].sphere.position.y + 1;
         shot_line.position.z = balls[0].sphere.position.z + 25*Math.sin(dir*Math.PI/180);
         shot_line.rotation.y = dir*Math.PI/180;
@@ -198,7 +198,8 @@ function rotate () {
 //laat bal bewegen, force is kracht en dir is de richting
 function launch() {
     speed = 1;
-    var force = document.getElementById('range_strength').value;
+    turnChange = true;
+    var force = 100 - (document.getElementById('range_strength').value);
     var vx0, vy0;
     if (!moving) {
         moving = true;
